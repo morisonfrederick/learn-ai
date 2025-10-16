@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { type QuestionData } from "../Types/dataTypes";
+import Navbar from "../components/Navbar";
 
 function Questions() {
   /**
@@ -89,29 +90,31 @@ function Questions() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 flex items-center justify-center px-4">
-      {questionsData ? (
-        <div className="w-full max-w-3xl bg-white rounded-3xl shadow-xl p-8">
-          {/* Quiz Topic */}
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 text-center">
-            {questionsData?.topic}
-          </h1>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 flex items-center justify-center px-4">
+        {questionsData ? (
+          <div className="w-full max-w-3xl bg-white rounded-3xl shadow-xl p-8">
+            {/* Quiz Topic */}
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 text-center">
+              {questionsData?.topic}
+            </h1>
 
-          {/* Current Question */}
-          <div className="mt-8">
-            <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-6 text-center">
-              {currentQuestion + 1}.{" "}
-              {questionsData?.questions?.[currentQuestion].question}
-            </h2>
+            {/* Current Question */}
+            <div className="mt-8">
+              <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-6 text-center">
+                {currentQuestion + 1}.{" "}
+                {questionsData?.questions?.[currentQuestion].question}
+              </h2>
 
-            {/* Answer Options */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              {questionsData?.questions?.[currentQuestion].answers.map(
-                (answer, index) => (
-                  <div
-                    key={index}
-                    onClick={() => setCurrentAnswer(index)}
-                    className={`rounded-2xl px-6 py-4 text-lg font-medium cursor-pointer transition shadow-md
+              {/* Answer Options */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                {questionsData?.questions?.[currentQuestion].answers.map(
+                  (answer, index) => (
+                    <div
+                      key={index}
+                      onClick={() => setCurrentAnswer(index)}
+                      className={`rounded-2xl px-6 py-4 text-lg font-medium cursor-pointer transition shadow-md
                       ${
                         currentAnswer === index
                           ? "bg-green-400 text-white"
@@ -122,54 +125,55 @@ function Questions() {
                           ? "border-2 border-red-500"
                           : "border border-transparent"
                       }`}
-                  >
-                    {answer?.options}
-                  </div>
-                )
-              )}
+                    >
+                      {answer?.options}
+                    </div>
+                  )
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Action Buttons */}
-          <div className="sm:flex grid grid-cols-2 sm:justify-center m-2 gap-2 sm:gap-6 sm:mt-8">
-            <button
-              className="px-6 py-2 rounded-full bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition shadow-md"
-              onClick={getCorrectAnswer}
-            >
-              Show
-            </button>
-            <button
-              className="px-6 py-2 rounded-full bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition shadow-md"
-              onClick={handleAnswer}
-            >
-              Submit
-            </button>
-            <button
-              className="px-6 py-2 rounded-full bg-blue-500 text-white font-semibold  hover:bg-blue-600 transition shadow-md"
-              onClick={handlePrev}
-            >
-              Prev
-            </button>
-            <button
-              className="px-6 py-2 rounded-full bg-blue-500 text-white font-semibold hover:bg-blue-600 transition shadow-md"
-              onClick={handleNext}
-            >
-              Next
-            </button>
-          </div>
+            {/* Action Buttons */}
+            <div className="sm:flex grid grid-cols-2 sm:justify-center m-2 gap-2 sm:gap-6 sm:mt-8">
+              <button
+                className="px-6 py-2 rounded-full bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition shadow-md"
+                onClick={getCorrectAnswer}
+              >
+                Show
+              </button>
+              <button
+                className="px-6 py-2 rounded-full bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition shadow-md"
+                onClick={handleAnswer}
+              >
+                Submit
+              </button>
+              <button
+                className="px-6 py-2 rounded-full bg-blue-500 text-white font-semibold  hover:bg-blue-600 transition shadow-md"
+                onClick={handlePrev}
+              >
+                Prev
+              </button>
+              <button
+                className="px-6 py-2 rounded-full bg-blue-500 text-white font-semibold hover:bg-blue-600 transition shadow-md"
+                onClick={handleNext}
+              >
+                Next
+              </button>
+            </div>
 
-          {/* Explanation Section (Shown when error or Show Answer is triggered) */}
-          {error && (
-            <p className="mt-6 text-red-600 bg-red-100 p-4 rounded-xl text-center shadow-inner">
-              {questionsData?.questions?.[currentQuestion]?.explanation}
-            </p>
-          )}
-        </div>
-      ) : (
-        // Fallback if no question data is loaded
-        <div className="text-lg text-gray-700 font-medium">Loading...</div>
-      )}
-    </div>
+            {/* Explanation Section (Shown when error or Show Answer is triggered) */}
+            {error && (
+              <p className="mt-6 text-red-600 bg-red-100 p-4 rounded-xl text-center shadow-inner">
+                {questionsData?.questions?.[currentQuestion]?.explanation}
+              </p>
+            )}
+          </div>
+        ) : (
+          // Fallback if no question data is loaded
+          <div className="text-lg text-gray-700 font-medium">Loading...</div>
+        )}
+      </div>
+    </>
   );
 }
 
